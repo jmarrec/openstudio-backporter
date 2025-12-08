@@ -1,0 +1,46 @@
+
+OS:Version,
+  {fbc346cb-f30b-4a8b-9167-4ce916889e61}, !- Handle
+  3.9.0;                                  !- Version Identifier
+
+OS:ZoneVentilation:DesignFlowRate,
+  {962f74e1-7dd7-4546-9d8b-d94bea72a994}, !- Handle
+  Zone Ventilation Design Flow Rate 1,    !- Name
+  {fbd0c41e-55d8-4e34-ba69-863bbc1fa95e}, !- Schedule Name
+  AirChanges/Hour,                        !- Design Flow Rate Calculation Method
+  0,                                      !- Design Flow Rate {m3/s}
+  0,                                      !- Flow Rate per Zone Floor Area {m3/s-m2}
+  0,                                      !- Flow Rate per Person {m3/s-person}
+  5,                                      !- Air Changes per Hour {1/hr}
+  Natural,                                !- Ventilation Type
+  0,                                      !- Fan Pressure Rise {Pa}
+  1,                                      !- Fan Total Efficiency
+  0.606,                                  !- Constant Term Coefficient
+  0.03636,                                !- Temperature Term Coefficient
+  0.1177,                                 !- Velocity Term Coefficient
+  0,                                      !- Velocity Squared Term Coefficient
+  18,                                     !- Minimum Indoor Temperature {C}
+  ,                                       !- Minimum Indoor Temperature Schedule Name
+  100,                                    !- Maximum Indoor Temperature {C}
+  ,                                       !- Maximum Indoor Temperature Schedule Name
+  1,                                      !- Delta Temperature {deltaC}
+  ,                                       !- Delta Temperature Schedule Name
+  -100,                                   !- Minimum Outdoor Temperature {C}
+  ,                                       !- Minimum Outdoor Temperature Schedule Name
+  100,                                    !- Maximum Outdoor Temperature {C}
+  ,                                       !- Maximum Outdoor Temperature Schedule Name
+  40;                                     !- Maximum Wind Speed {m/s}
+
+OS:Schedule:Constant,
+  {fbd0c41e-55d8-4e34-ba69-863bbc1fa95e}, !- Handle
+  Always On Discrete,                     !- Name
+  {1c314f23-46cd-4577-a24f-be77f4cb1820}, !- Schedule Type Limits Name
+  1;                                      !- Value
+
+OS:ScheduleTypeLimits,
+  {1c314f23-46cd-4577-a24f-be77f4cb1820}, !- Handle
+  OnOff,                                  !- Name
+  0,                                      !- Lower Limit Value
+  1,                                      !- Upper Limit Value
+  Discrete,                               !- Numeric Type
+  Availability;                           !- Unit Type

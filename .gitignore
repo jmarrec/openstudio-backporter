@@ -1,3 +1,6 @@
+tests/*/output_*
+
+
 # macOS
 .DS_Store
 .AppleDouble

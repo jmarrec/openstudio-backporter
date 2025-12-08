@@ -1,0 +1,19 @@
+
+OS:Version,
+  {f2dd648e-6064-43d8-9c35-2d9f1072cf74}, !- Handle
+  3.9.0;                                  !- Version Identifier
+
+OS:SpaceInfiltration:DesignFlowRate,
+  {902a43da-828a-4eef-ae5c-ea48ce697bf3}, !- Handle
+  Space Infiltration Design Flow Rate 1,  !- Name
+  ,                                       !- Space or SpaceType Name
+  ,                                       !- Schedule Name
+  Flow/Space,                             !- Design Flow Rate Calculation Method
+  0,                                      !- Design Flow Rate {m3/s}
+  ,                                       !- Flow per Space Floor Area {m3/s-m2}
+  ,                                       !- Flow per Exterior Surface Area {m3/s-m2}
+  ,                                       !- Air Changes per Hour {1/hr}
+  ,                                       !- Constant Term Coefficient
+  ,                                       !- Temperature Term Coefficient
+  ,                                       !- Velocity Term Coefficient
+  0.2;                                    !- Velocity Squared Term Coefficient
