@@ -10,7 +10,8 @@ sys.path.insert(0, '/Users/julien/Software/Others/OS-build-release/Products/pyth
 
 from openstudiobackporter.backporter import VERSION_TRANSLATION_MAP, Backporter
 
-if __name__ == "__main__":
+
+def main():
     parser = argparse.ArgumentParser(description="Backport an OpenStudio Model (OSM) file to an earlier version.")
     # Argument: -t, --to [VERSION], choices: list(VERSION_TRANSLATION_MAP.keys())
     parser.add_argument(
@@ -40,3 +41,7 @@ if __name__ == "__main__":
         logger.add(lambda msg: print(msg, end=''), level="INFO")
     backporter = Backporter(to_version=args.to_version, save_intermediate=args.save_intermediate)
     backporter.backport_file(osm_path=args.osm_path)
+
+
+if __name__ == "__main__":
+    main()
