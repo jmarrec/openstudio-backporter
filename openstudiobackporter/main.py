@@ -12,7 +12,9 @@ from openstudiobackporter.backporter import KNOWN_TO_VERSIONS, Backporter
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Backport an OpenStudio Model (OSM) file to an earlier version.")
+    parser = argparse.ArgumentParser(
+        prog="openstudiobackporter", description="Backport an OpenStudio Model (OSM) file to an earlier version."
+    )
     # Argument: -t, --to [VERSION], choices: list(VERSION_TRANSLATION_MAP.keys())
     parser.add_argument(
         "-t",
