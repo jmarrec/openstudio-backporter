@@ -1389,24 +1389,29 @@ files = [
 
 [[package]]
 name = "openstudio"
-version = "3.10.0"
+version = "3.11.0"
 description = "OpenStudio python bindings."
 optional = false
 python-versions = ">=3.7.1"
 groups = ["main"]
 files = [
-    {file = "openstudio-3.10.0-cp310-cp310-win_amd64.whl", hash = "sha256:b1fc29a34211b1d59906ce6847440a6b9727caeffc748828703dbfd51ba7ed04"},
-    {file = "openstudio-3.10.0-cp311-cp311-win_amd64.whl", hash = "sha256:9eeb8d1355cf52491c3942ca4bad8a3642746b08a923b3b7369ed31c62d0dc1e"},
-    {file = "openstudio-3.10.0-cp312-cp312-win_amd64.whl", hash = "sha256:dc39672d17eff90bb2cf3d3f5335ca97a6fcd73b3f12164ee7baaaa9821e8aad"},
-    {file = "openstudio-3.10.0-cp313-cp313-win_amd64.whl", hash = "sha256:5d2fc0d6a10fe0ea1c75b8b14681221b1a9732652a082fef63345538ede6d87a"},
-    {file = "openstudio-3.10.0-cp37-cp37m-win_amd64.whl", hash = "sha256:0f498c75d99ba3f75a402253d0e348b0dfbf5163613289a5743e23b0b3ebd09e"},
-    {file = "openstudio-3.10.0-cp38-cp38-win_amd64.whl", hash = "sha256:80e12f4ec9881e06ae3134bef91e27ba3b8e6b5c4ea84772adc5dc51dbdaf9c9"},
-    {file = "openstudio-3.10.0-cp39-cp39-win_amd64.whl", hash = "sha256:7ad43b2c33353cddc6247d7c80b5a84e9822cfc52f908f9dcb8c3e21ac385227"},
-    {file = "openstudio-3.10.0-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:16e08e4d0bd9783073c458ac3dee227308c382bf2147e1b9d1225a1363ba8d0e"},
-    {file = "openstudio-3.10.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:33861bee244b4132ab9c2ec08a88f508b0612a54a1d313cb82e0c0f6d0cbfb6f"},
-    {file = "openstudio-3.10.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:92332775a6533bedcca1d89076c36f5a79d3e28d61b4887bbdc48f94aaaa6544"},
-    {file = "openstudio-3.10.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:9c9cd692c2c37b75997792f33169cc4cfc16c1c49ee36147b337b987e6fd740b"},
+    {file = "openstudio-3.11.0-cp310-cp310-win_amd64.whl", hash = "sha256:1df7c9362a975ae40a05571f46ece8d6d9350e3dedd4346b4885139bf3e61a91"},
+    {file = "openstudio-3.11.0-cp311-cp311-win_amd64.whl", hash = "sha256:35921e96929a4cfd2ae2974b8fe8ff77e954ef9f35919f6f83b68e1637caf705"},
+    {file = "openstudio-3.11.0-cp312-cp312-win_amd64.whl", hash = "sha256:45c64c5ff84c4c16b9dc18baa9a972d83baaf0eb7247fdb7e5f3187dc2fc693d"},
+    {file = "openstudio-3.11.0-cp313-cp313-win_amd64.whl", hash = "sha256:9055a87d5285621adb98fd3d64d3bf6e8e8e445f78d0b5098f2ce0273530c1b3"},
+    {file = "openstudio-3.11.0-cp37-cp37m-win_amd64.whl", hash = "sha256:948404d6f84b590192e5d409366bad39943da0d10d83339ba572807530eef10f"},
+    {file = "openstudio-3.11.0-cp38-cp38-win_amd64.whl", hash = "sha256:e696dff734a89a02f1588213a3c30e484322c01ca1ec27578fda1aff9d0a09b2"},
+    {file = "openstudio-3.11.0-cp39-cp39-win_amd64.whl", hash = "sha256:2251dbcec019365e2134a9055fc5ce97087fb29221aa42f25dad861c66b80fcd"},
+    {file = "openstudio-3.11.0-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:249c764be8ba95d2813f7b03711174cd2358629d661b84a8e762da5e4df26a64"},
+    {file = "openstudio-3.11.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:e65ccf18cfff949c667d922508ac995aa28f55fe66d51a51d60b3efeef3e7912"},
+    {file = "openstudio-3.11.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:b5c89270d4920a862b5ab0b8e8e796a429fe6cf6b2ef7ff21768b46a2ce2f963"},
+    {file = "openstudio-3.11.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:5f7856d713c09205b483ecfc390eef32e5a78d9c4de7ef206d95a1d8be79a741"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://test.pypi.org/simple"
+reference = "testpypi"
 
 [[package]]
 name = "packaging"
@@ -2174,4 +2179,4 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "7fc78993966576ef8619886bc9f223e3d682184b0a2466363ab21eb8e2a8dfe8"
+content-hash = "051c7802861bb934c5910a4a2058ce10be6eb2966fdbd1a6c5c5ca0cf82ea276"
