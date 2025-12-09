@@ -2,7 +2,7 @@
 
 __author__ = """Julien Marrec"""
 __email__ = 'contact@effibem.com'
-__version__ = '3.10.0'
+__version__ = '0.1.0'
 
 from openstudiobackporter.backporter import Backporter
 
