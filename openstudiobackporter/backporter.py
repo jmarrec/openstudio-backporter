@@ -29,9 +29,6 @@ class Backporter:
         if to_version not in VERSION_TRANSLATION_MAP:
             raise ValueError(f"Unsupported target version: {to_version}")
 
-        if to_version not in VERSION_TRANSLATION_MAP:
-            raise ValueError(f"Unsupported target version: {to_version}")
-
         self.to_version = openstudio.VersionString(to_version)
         self.to_version_str = to_version
         self.save_intermediate = save_intermediate
