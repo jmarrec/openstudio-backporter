@@ -16,6 +16,11 @@ def backport_and_save(osm_rel_path: Path) -> openstudio.IdfFile:
     idf_file = backporter.backport_file(osm_path=THIS_DIR / osm_rel_path)
     new_name = f"output_{osm_rel_path.stem.replace('3_10_0', '3_9_0')}.osm"
     idf_file.save(THIS_DIR / new_name)
+
+    # Ensure we can still load the backported file
+    m_ = openstudio.model.Model.load(THIS_DIR / new_name)
+    assert m_.is_initialized()
+
     return idf_file
 
 

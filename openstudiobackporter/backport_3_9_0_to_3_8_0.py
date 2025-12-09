@@ -22,6 +22,7 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # ----------------------------------------------
             # * High Humidity Outdoor Air Flow Ratio * 24
             # * Control High Indoor Humidity Based on Outdoor Humidity Ratio * 25
+            # Fields were made required, so they filled in the default value. I don't see the point reverting that.
             targetIdf.addObject(obj)
 
         elif iddname == "OS:OutputControl:Files":
@@ -159,7 +160,7 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:Chiller:Electric:EIR":
-            # 3 required Fields has been added from 3.8.0 to 3.9.0:
+            # 7 fields added at end, 3 required Fields has been added from 3.8.0 to 3.9.0:
             # ----------------------------------------------
             # * Condenser Flow Control * 35
             # * Condenser Minimum Flow Fraction * 38
@@ -171,28 +172,16 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
                 value = obj.getString(i)
                 if value.is_initialized():
                     if i < 35:
-                        # fields before the inserted ones → same index
+                        # fields before the inserted ones, same index
                         newObject.setString(i, value.get())
-                    elif i == 35:
-                        # 35 is new field we are deleting
-                        continue
-                    elif i < 38:
-                        # fields between old 35–38 were shifted by +1
-                        newObject.setString(i - 1, value.get())
-                    elif i == 38:
-                        # 38 is new field we are deleting
-                        continue
-                    elif i < 40:
-                        # fields between old 38–40 were shifted by +2
-                        newObject.setString(i - 2, value.get())
                     else:
-                        # Field 40 was added, and it is the last, we remove it
+                        # Field 35 to 40 were added at the end, removing
                         continue
 
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:Chiller:Electric:ReformulatedEIR":
-            # 3 required Fields has been added from 3.8.0 to 3.9.0:
+            # 7 fields added at end, 3 required Fields has been added from 3.8.0 to 3.9.0:
             # ----------------------------------------------
             # * Condenser Flow Control * 31
             # * Condenser Minimum Flow Fraction * 34
@@ -205,22 +194,10 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
                 value = obj.getString(i)
                 if value.is_initialized():
                     if i < 31:
-                        # fields before the inserted ones → same index
+                        # fields before the inserted ones, same index
                         newObject.setString(i, value.get())
-                    elif i == 31:
-                        # 31 is new field we are deleting
-                        continue
-                    elif i < 34:
-                        # fields between old 31–34 were shifted by +1
-                        newObject.setString(i - 1, value.get())
-                    elif i == 34:
-                        # 34 is new field we are deleting
-                        continue
-                    elif i < 36:
-                        # fields between old 34–36 were shifted by +2
-                        newObject.setString(i - 2, value.get())
                     else:
-                        # Field 36 was added, and it is the last, we remove it
+                        # Field 31 to 36 were added at the end, removing
                         continue
 
             targetIdf.addObject(newObject)
