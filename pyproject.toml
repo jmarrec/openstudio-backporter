@@ -127,6 +127,7 @@ allowlist_externals = ["pytest"]
 #   "pytest",
 #   "pytest-cov",
 # ]
+setenv.PIP_EXTRA_INDEX_URL = "https://test.pypi.org/simple/"
 commands = [["pytest", "--cov={envsitepackagesdir}/openstudiobackporter", "--cov-branch", "--cov-report=xml", "--cov-report=term-missing"]]
 
 [tool.tox.env.type]
