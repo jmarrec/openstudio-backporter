@@ -26,11 +26,25 @@ python = ">=3.10,<4.0"
 openstudio = { version= "3.10.0", allow-prereleases = true }
 loguru = "^0.7.3"
 
+pytest  = {version = "^9.0.2", optional = true}
+pytest-cov  = {version = "^7.0.0", optional = true}
+
+[tool.poetry.group.test]
+optional = true
 
 [tool.poetry.group.test.dependencies]
 pytest = "^9.0.2"
 pytest-cov = "^7.0.0"
 tox = "^4.32.0"
+
+[tool.poetry.extras]
+test = [
+    "pytest",
+    "pytest-cov"
+]
+
+[tool.poetry.group.docs]
+optional = true
 
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.6.1"
@@ -39,6 +53,9 @@ mkdocs-material = "^9.6.15"
 mkdocstrings = "^0.29.1"
 mkdocstrings-python = "^1.16.12"
 mkdocs-autorefs = "^1.4.2"
+
+[tool.poetry.group.dev]
+optional = true
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.5.0"
@@ -92,6 +109,7 @@ module = 'openstudio'
 ignore_missing_imports = true
 
 [tool.tox]
+isolated_build = true
 requires = ["tox>=4.32"]
 env_list = ["3.13", "3.12", "type"]
 
@@ -100,7 +118,11 @@ env_list = ["3.13", "3.12", "type"]
 description = "Run tests under {base_python}"
 extras = ["test"]
 allowlist_externals = ["pytest"]
-commands = [["pytest", "--cov=openstudiobackporter", "--cov-branch", "--cov-report=xml", "--cov-report=term-missing"]]
+# deps = [
+#   "pytest",
+#   "pytest-cov",
+# ]
+commands = [["pytest", "--cov={envsitepackagesdir}/openstudiobackporter", "--cov-branch", "--cov-report=xml", "--cov-report=term-missing"]]
 
 [tool.tox.env.type]
 description = "Run type checks on code base"
