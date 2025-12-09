@@ -16,6 +16,7 @@ A Jupyter Notebook [openstudio-backporter_Demonstration.ipynb](openstudio-backpo
 * Documentation: <https://jmarrec.github.io/openstudio-backporter>
 * GitHub: <https://github.com/jmarrec/openstudio-backporter>
 * PyPI: <https://pypi.org/project/openstudio-backporter/>
+* TestPyPI: <https://test.pypi.org/project/openstudio-backporter/>
 
 
 This is free software (MIT License) contributed by [EffiBEM](https://www.effibem.com).

@@ -16,16 +16,16 @@ theme:
   #logo: assets/logo.png
   palette:
     scheme: preference
-    primary: indigo
-    accent: indigo
+    primary: light blue
+    accent: deep orange
   features:
     - navigation.indexes
     - navigation.instant
     - navigation.tabs.sticky
 markdown_extensions:
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.critic
   - pymdownx.caret
   - pymdownx.mark
@@ -43,17 +43,28 @@ markdown_extensions:
   - toc:
       baselevel: 2
       permalink: true
-      slugify: !!python/name:pymdownx.slugs.uslugify
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {}
   - meta
 plugins:
   - include-markdown
   - search:
       lang: en
   - mkdocstrings:
-      watch:
-        - openstudio-backporter
+      handlers:
+        python:
+          paths:
+            - openstudiobackporter
+          options:
+            show_source: true
+            show_signature: true
+            show_signature_annotations: true
+            separate_signature: false
 extra:
   social:
+    - icon: fontawesome/brands/bluesky
+      # replace with your own bluesky link below
+      link: https://bsky.app/profile/julienmarrec.bsky.social
+      name: Bluesky
     - icon: fontawesome/brands/twitter
       # replace with your own tweet link below
       link: https://twitter.com/MarrecJulien
@@ -61,11 +72,3 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/jmarrec/openstudio-backporter
       name: Github
-    - icon: material/email
-      link: "mailto:contact@effibem.com"
-  # to enable disqus, uncomment the following and put your disqus id below
-  # disqus: disqus_id
-# uncomment the following and put your google tracking id below to enable GA
-#google_analytics:
-  #- UA-xxx
-  #- auto

@@ -17,6 +17,11 @@ VERSION_TRANSLATION_MAP = {
     "3.10.0": backport_3_10_0_to_3_9_0.run_translation,
 }
 
+# Harcoding because of mkdocs
+KNOWN_TO_VERSIONS = ["3.8.0", "3.9.0"]
+"""List of all known versions that can be translated *to*."""
+assert KNOWN_TO_VERSIONS == list(VERSION_TRANSLATION_MAP.keys())[:-1]
+
 
 def normalize_version(version: openstudio.VersionString) -> str:
     """Normalize a version string to the format 'X.Y.Z'."""
@@ -63,7 +68,7 @@ class Backporter:
         return self.backport(idf_file=idf_file)
 
     def backport(self, idf_file: openstudio.IdfFile) -> openstudio.IdfFile:
-        """Backport an OpenStudio Model (OSM) file to an earlier version."""
+        """Backport an OpenStudio Model as an IdfFile to an earlier version."""
 
         version = idf_file.version()
         if version <= self.to_version:

@@ -8,7 +8,7 @@ from loguru import logger
 
 sys.path.insert(0, '/Users/julien/Software/Others/OS-build-release/Products/python')
 
-from openstudiobackporter.backporter import VERSION_TRANSLATION_MAP, Backporter
+from openstudiobackporter.backporter import KNOWN_TO_VERSIONS, Backporter
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
         "--to-version",
         type=str,
         required=True,
-        choices=list(VERSION_TRANSLATION_MAP.keys()),
+        choices=list(KNOWN_TO_VERSIONS),
         help="Target OpenStudio version to backport to.",
     )
     # Argument: -s, --save-intermediate (bool)

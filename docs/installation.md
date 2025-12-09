@@ -9,7 +9,7 @@ terminal:
 $ pip install openstudio-backporter
 ```
 
-This is the preferred method to install openstudio-backporter, as it will always install the most recent stable release.
+This is the preferred method to install `openstudio-backporter`, as it will always install the most recent stable release.
 
 If you don't have [pip][] installed, this [Python installation guide][]
 can guide you through the process.
@@ -34,8 +34,11 @@ $ curl -OJL https://github.com/jmarrec/openstudio-backporter/tarball/main
 Once you have a copy of the source, you can install it with:
 
 ``` console
-$ pip install .
+pip install poetry
+poetry install --all-groups
 ```
+
+Or you can also `pip install .` if you prefer.
 
   [pip]: https://pip.pypa.io
   [Python installation guide]: http://docs.python-guide.org/en/latest/starting/installation/
