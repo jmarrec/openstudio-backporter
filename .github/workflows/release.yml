@@ -24,6 +24,7 @@ jobs:
       url: https://pypi.org/p/openstudio-backporter
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      contents: write  # Needed for docs publishing
 
     strategy:
       matrix:
@@ -65,7 +66,7 @@ jobs:
     - name: publish documentation
       uses: peaceiris/actions-gh-pages@v4
       with:
-        personal_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./site
 
     - name: Build wheels and source tarball
