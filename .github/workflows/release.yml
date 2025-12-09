@@ -20,10 +20,8 @@ jobs:
     runs-on: ubuntu-24.04
 
     environment:
-      name: testpypi
-      url:  https://test.pypi.org/p/openstudiobackporter
-      # name: pypi
-      # url: https://pypi.org/p/openstudiobackporter
+      name: pypi
+      url: https://pypi.org/p/openstudiobackporter
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
 
@@ -89,14 +87,8 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Publish package distributions to TestPyPI
+    - name: publish to PyPI
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        repository-url: https://test.pypi.org/legacy/
         skip_existing: true
-
-    # - name: publish to PyPI
-    #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-    #   uses: pypa/gh-action-pypi-publish@release/v1
-    #   with:
-    #     skip_existing: true

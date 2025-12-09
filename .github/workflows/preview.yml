@@ -15,7 +15,9 @@ on:
 jobs:
   publish_dev_build:
     runs-on: ubuntu-latest
-
+    environment:
+      name: testpypi
+      url:  https://test.pypi.org/p/openstudiobackporter
     strategy:
       matrix:
         python-versions: [ 3.12 ]
