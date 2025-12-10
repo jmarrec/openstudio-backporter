@@ -8,6 +8,12 @@ This projects adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.3] - 2025-12-10
+
+### Changed
+
+- README clarified
+
 ## [0.1.2] - 2025-12-10
 
 ### Added
@@ -35,6 +41,7 @@ This projects adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Added backporting from 3.10.0 -> 3.9.0 and 3.9.0 -> 3.8.0
 
 [Unreleased]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.0...HEAD
+[0.1.3]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/jmarrec/openstudio-backporter/releases/tag/v0.1.0
