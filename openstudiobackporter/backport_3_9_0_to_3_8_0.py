@@ -1,6 +1,8 @@
 import openstudio
 from loguru import logger
 
+from openstudiobackporter.helpers import copy_object_as_is, copy_with_cutoff_fields, copy_with_deleted_fields
+
 
 def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
     """Backport an IdfFile from 3.9.0 to 3.8.0."""
@@ -16,6 +18,9 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
     for obj in idf_3_9_0.objects():
         iddname = obj.iddObject().name()
 
+        iddObject = idd_3_8_0.getObject(iddname).get()
+        newObject = openstudio.IdfObject(iddObject)
+
         if iddname == "OS:Controller:OutdoorAir":
 
             # 2 Fields have been made required from 3.8.0 to 3.9.0:
@@ -23,27 +28,15 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # * High Humidity Outdoor Air Flow Ratio * 24
             # * Control High Indoor Humidity Based on Outdoor Humidity Ratio * 25
             # Fields were made required, so they filled in the default value. I don't see the point reverting that.
-            targetIdf.addObject(obj)
+            copy_object_as_is(obj=obj, newObject=newObject)
+            targetIdf.addObject(newObject)
 
         elif iddname == "OS:OutputControl:Files":
             # 1 Field has been added from 3.8.0 to 3.9.0:
             # ----------------------------------------------
             # * Output Space Sizing * 9
-            iddObject = idd_3_8_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
 
-            skip = 9
-
-            for i in range(obj.numFields()):
-                if i == skip:
-                    continue
-                elif i < skip:
-                    if value := obj.getString(i):
-                        newObject.setString(i, value.get())
-                else:
-                    if value := obj.getString(i):
-                        newObject.setString(i - 1, value.get())
-
+            copy_with_deleted_fields(obj=obj, newObject=newObject, skip_indices={9})
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:HeatPump:PlantLoop:EIR:Heating":
@@ -57,28 +50,8 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # 1 required Field has been added from 3.8.0 to 3.9.0:
             # ----------------------------------------------
             # * Minimum Heat Recovery Outlet Temperature * 36
-            iddObject = idd_3_8_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
 
-            for i in range(obj.numFields()):
-                value = obj.getString(i)
-                if value.is_initialized():
-                    if i < 7:
-                        # fields before the inserted ones → same index
-                        newObject.setString(i, value.get())
-                    elif i < 9:
-                        # 7 and 8 are new fields we are deleting
-                        continue
-                    elif i < 12:
-                        # fields between old 7–9 were shifted by +2
-                        newObject.setString(i - 2, value.get())
-                    elif i < 36:
-                        # fields after 10 were shifted by +3
-                        newObject.setString(i - 3, value.get())
-                    else:
-                        # Field 36 was added, we remove it
-                        continue
-
+            copy_with_deleted_fields(obj=obj, newObject=newObject, skip_indices={7, 8, 12, 36})
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:HeatPump:PlantLoop:EIR:Cooling":
@@ -89,35 +62,12 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # * Heat Recovery Outlet Node Name * 8
             # * Heat Recovery Reference Flow Rate * 12
 
-            # 2 required Fields have been added from 3.8.0 to 3.9.0:
+            # 5 fields added at end, 2 are required Fields, from 3.8.0 to 3.9.0:
             # ----------------------------------------------
             # * Maximum Heat Recovery Outlet Temperature * 26
             # * Minimum Thermosiphon Minimum Temperature Difference * 30
-            iddObject = idd_3_8_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
 
-            for i in range(obj.numFields()):
-                value = obj.getString(i)
-                if value.is_initialized():
-                    if i < 7:
-                        # fields before the inserted ones → same index
-                        newObject.setString(i, value.get())
-                    elif i < 9:
-                        # 7 and 8 are new fields we are deleting
-                        continue
-                    elif i < 12:
-                        # fields between old 7–9 were shifted by +2
-                        newObject.setString(i - 2, value.get())
-                    elif i < 26:
-                        # fields after 10 were shifted by +3
-                        newObject.setString(i - 3, value.get())
-                    elif i < 30:
-                        # fields between old 26–30 were shifted by +4
-                        newObject.setString(i - 4, value.get())
-                    else:
-                        # Field 30 was added, we remove it
-                        continue
-
+            copy_with_deleted_fields(obj=obj, newObject=newObject, skip_indices={7, 8, 12, 26, 27, 28, 29, 30})
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:AirTerminal:SingleDuct:SeriesPIU:Reheat":
@@ -129,15 +79,7 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # * Design Heating Discharge Air Temperature * 19
             # * High Limit Heating Discharge Air Temperature * 20
 
-            iddObject = idd_3_8_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
-
-            for i in range(obj.numFields()):
-                value = obj.getString(i)
-                if value.is_initialized():
-                    if i < 16:
-                        newObject.setString(i, value.get())
-
+            copy_with_cutoff_fields(obj=obj, newObject=newObject, cutoff_index=16)
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:AirTerminal:SingleDuct:ParallelPIU:Reheat":
@@ -148,15 +90,8 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # * Heating Control Type * 19
             # * Design Heating Discharge Air Temperature * 20
             # * High Limit Heating Discharge Air Temperature * 21
-            iddObject = idd_3_8_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
 
-            for i in range(obj.numFields()):
-                value = obj.getString(i)
-                if value.is_initialized():
-                    if i < 17:
-                        newObject.setString(i, value.get())
-
+            copy_with_cutoff_fields(obj=obj, newObject=newObject, cutoff_index=17)
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:Chiller:Electric:EIR":
@@ -165,19 +100,8 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # * Condenser Flow Control * 35
             # * Condenser Minimum Flow Fraction * 38
             # * Thermosiphon Minimum Temperature Difference * 40
-            iddObject = idd_3_8_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
 
-            for i in range(obj.numFields()):
-                value = obj.getString(i)
-                if value.is_initialized():
-                    if i < 35:
-                        # fields before the inserted ones, same index
-                        newObject.setString(i, value.get())
-                    else:
-                        # Field 35 to 40 were added at the end, removing
-                        continue
-
+            copy_with_cutoff_fields(obj=obj, newObject=newObject, cutoff_index=35)
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:Chiller:Electric:ReformulatedEIR":
@@ -187,37 +111,19 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # * Condenser Minimum Flow Fraction * 34
             # * Thermosiphon Minimum Temperature Difference * 36 (at end)
 
-            iddObject = idd_3_8_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
-
-            for i in range(obj.numFields()):
-                value = obj.getString(i)
-                if value.is_initialized():
-                    if i < 31:
-                        # fields before the inserted ones, same index
-                        newObject.setString(i, value.get())
-                    else:
-                        # Field 31 to 36 were added at the end, removing
-                        continue
-
+            copy_with_cutoff_fields(obj=obj, newObject=newObject, cutoff_index=31)
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:Sizing:Zone":
             # 1 required Field has been added from 3.8.0 to 3.9.0:
             # ----------------------------------------------
             # * Sizing Option * 39 (at end)
-            iddObject = idd_3_8_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
 
-            for i in range(obj.numFields()):
-                value = obj.getString(i)
-                if value.is_initialized():
-                    if i < 39:
-                        newObject.setString(i, value.get())
-
+            copy_with_cutoff_fields(obj=obj, newObject=newObject, cutoff_index=39)
             targetIdf.addObject(newObject)
 
         else:
-            targetIdf.addObject(obj)
+            copy_object_as_is(obj=obj, newObject=newObject)
+            targetIdf.addObject(newObject)
 
     return targetIdf

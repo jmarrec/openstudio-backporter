@@ -144,7 +144,7 @@ def test_vt_HeatPumpPlantLoopEIR():
 
     assert hp_cooling.getDouble(20).get() == 100.0  # Maximum Source Inlet Temperature {C}
     assert hp_cooling.isEmpty(21)  # Minimum Supply Water Temperature Curve Name
-    assert hp_cooling.getDouble(22).get() == 60.0  # Maximum Supply Water Temperature Curve Name
+    assert hp_cooling.isEmpty(22)  # Maximum Supply Water Temperature Curve Name
 
     # Two last fields deleted Minimum/Maximum Supply Water Temperature Curve Name
     assert hp_cooling.numFields() == 23
