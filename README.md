@@ -30,7 +30,11 @@ See `python -m openstudiobackporter --help` for the list of command line paramet
 Example:
 
 ```shell
-python -m openstudiobackporter --to-version 3.8.0 --save-intermediate --verbose /path/to/model3_10_0.osm
+python -m openstudiobackporter \
+       --to-version 3.8.0 \
+       --save-intermediate \
+       --verbose \
+       /path/to/model3_10_0.osm
 ```
 
 ### Library
