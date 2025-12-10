@@ -1,7 +1,12 @@
 import openstudio
 from loguru import logger
 
-from openstudiobackporter.helpers import copy_object_as_is, copy_with_cutoff_fields, copy_with_deleted_fields
+from openstudiobackporter.helpers import (
+    brief_description,
+    copy_object_as_is,
+    copy_with_cutoff_fields,
+    copy_with_deleted_fields,
+)
 
 
 def run_translation(idf_3_10_0: openstudio.IdfFile) -> openstudio.IdfFile:
@@ -18,7 +23,13 @@ def run_translation(idf_3_10_0: openstudio.IdfFile) -> openstudio.IdfFile:
     for obj in idf_3_10_0.objects():
         iddname = obj.iddObject().name()
 
-        iddObject = idd_3_9_0.getObject(iddname).get()
+        iddObject_ = idd_3_9_0.getObject(iddname)
+        if not iddObject_.is_initialized():
+            # Object type doesn't exist in target version, skip it
+            logger.warning(f"{brief_description(idf_obj=obj)} does not exist in version 3.9.0, skipping.")
+            continue
+
+        iddObject = iddObject_.get()
         newObject = openstudio.IdfObject(iddObject)
 
         if iddname == "OS:WaterHeater:HeatPump":

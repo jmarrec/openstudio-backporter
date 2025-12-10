@@ -83,3 +83,11 @@ def test_vt_ZoneVentilationDesignFlowRate():
 
     # Last field: Density Basis should have been deleted
     assert zvidfr.numFields() == 26
+
+
+def test_vt_PythonPluginSearchPaths_New():
+    """This object was added in 3.10.0, so should not be present in backported file."""
+    idf_file = backport_and_save(osm_rel_path=Path("PythonPluginSearchPaths_New_3_10_0.osm"))
+
+    search_paths = get_objects_by_type(idf_file=idf_file, idd_object_type_name="OS:PythonPlugin:SearchPaths")
+    assert len(search_paths) == 0

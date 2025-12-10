@@ -1,0 +1,10 @@
+
+OS:Version,
+  {caf26b62-deaf-48d6-8239-b16517b3a69b}, !- Handle
+  3.10.0;                                 !- Version Identifier
+
+OS:PythonPlugin:SearchPaths,
+  {039f0f81-1c0a-49a0-8f88-8a1c3fcf79da}, !- Handle
+  Yes,                                    !- Add Current Working Directory to Search Path
+  Yes,                                    !- Add Input File Directory to Search Path
+  Yes;                                    !- Add epin Environment Variable to Search Path

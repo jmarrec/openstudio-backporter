@@ -11,7 +11,10 @@ def get_objects_by_type(idf_file: openstudio.IdfFile, idd_object_type_name: str)
 
 def brief_description(idf_obj: openstudio.IdfObject) -> str:
     """Get a brief description of the IdfObject."""
-    return f"{idf_obj.iddObject().name()} '{idf_obj.nameString()}'"
+    if name_ := idf_obj.nameString():
+        return f"{idf_obj.iddObject().name()} '{name_}'"
+    else:
+        return f"{idf_obj.iddObject().name()}"
 
 
 def get_target(idf_file: openstudio.IdfFile, idf_obj: openstudio.IdfObject, index: int) -> openstudio.OptionalIdfObject:
