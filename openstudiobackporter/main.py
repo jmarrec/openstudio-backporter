@@ -42,7 +42,10 @@ def main():
         logger.remove()
         logger.add(lambda msg: print(msg, end=''), level="INFO")
     backporter = Backporter(to_version=args.to_version, save_intermediate=args.save_intermediate)
-    backporter.backport_file(osm_path=args.osm_path)
+    idf_file = backporter.backport_file(osm_path=args.osm_path)
+    idf_path = args.osm_path.with_name(f"{args.osm_path.stem}_backported_to_{args.to_version}.osm")
+    idf_file.save(idf_path, True)
+    logger.info(f"Backported OSM file saved to: {idf_path}")
 
 
 if __name__ == "__main__":

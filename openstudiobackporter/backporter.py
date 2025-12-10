@@ -64,7 +64,7 @@ class Backporter:
 
         idf_file = openstudio.IdfFile.load(osm_path, ori_idd)
         if not idf_file.is_initialized():
-            raise ValueError(f"Failed to load model from {osm_path}")
+            raise ValueError(f"Failed to load model from '{osm_path}'")
         idf_file = idf_file.get()
         return self.backport(idf_file=idf_file)
 
@@ -88,8 +88,8 @@ class Backporter:
             idf_file = translator(idf_file)
             version = idf_file.version()
             if self.save_intermediate:
-                intermediate_path = self.osm_path.parent / f"{self.osm_path.stem}_{version.str()}.osm"
+                intermediate_path = self.osm_path.with_name(f"{self.osm_path.stem}_backported_to_{version.str()}.osm")
                 idf_file.save(intermediate_path, True)
-                logger.info(f"Saved intermediate backported file to {intermediate_path}")
+                logger.info(f"Saved intermediate backported file to '{intermediate_path}'")
 
         return idf_file
