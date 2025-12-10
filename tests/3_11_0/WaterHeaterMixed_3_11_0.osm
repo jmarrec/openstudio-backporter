@@ -1,0 +1,95 @@
+
+OS:Version,
+  {93cf399a-5013-4ab0-9e25-8d787c92cf0e}, !- Handle
+  3.11.0;                                 !- Version Identifier
+
+OS:WaterHeater:Mixed,
+  {37833996-2fd5-45ba-b5a9-2b58c9a7f40b}, !- Handle
+  Water Heater Mixed 1,                   !- Name
+  0.3785,                                 !- Tank Volume {m3}
+  {7ace0490-7f63-4d5a-8948-4ce798954849}, !- Setpoint Temperature Schedule Name
+  2,                                      !- Deadband Temperature Difference {deltaC}
+  82.22,                                  !- Maximum Temperature Limit {C}
+  Cycle,                                  !- Heater Control Type
+  845000,                                 !- Heater Maximum Capacity {W}
+  ,                                       !- Heater Minimum Capacity {W}
+  ,                                       !- Heater Ignition Minimum Flow Rate {m3/s}
+  ,                                       !- Heater Ignition Delay {s}
+  NaturalGas,                             !- Heater Fuel Type
+  0.8,                                    !- Heater Thermal Efficiency
+  ,                                       !- Part Load Factor Curve Name
+  20,                                     !- Off Cycle Parasitic Fuel Consumption Rate {W}
+  NaturalGas,                             !- Off Cycle Parasitic Fuel Type
+  0.8,                                    !- Off Cycle Parasitic Heat Fraction to Tank
+  ,                                       !- On Cycle Parasitic Fuel Consumption Rate {W}
+  NaturalGas,                             !- On Cycle Parasitic Fuel Type
+  ,                                       !- On Cycle Parasitic Heat Fraction to Tank
+  Schedule,                               !- Ambient Temperature Indicator
+  {583daa4f-33fc-459e-bd3b-d03cf2380958}, !- Ambient Temperature Schedule Name
+  ,                                       !- Ambient Temperature Thermal Zone Name
+  ,                                       !- Ambient Temperature Outdoor Air Node Name
+  6,                                      !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
+  ,                                       !- Off Cycle Loss Fraction to Thermal Zone
+  6,                                      !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
+  ,                                       !- On Cycle Loss Fraction to Thermal Zone
+  ,                                       !- Peak Use Flow Rate {m3/s}
+  ,                                       !- Use Flow Rate Fraction Schedule Name
+  ,                                       !- Cold Water Supply Temperature Schedule Name
+  ,                                       !- Use Side Inlet Node Name
+  ,                                       !- Use Side Outlet Node Name
+  1,                                      !- Use Side Effectiveness
+  ,                                       !- Source Side Inlet Node Name
+  ,                                       !- Source Side Outlet Node Name
+  1,                                      !- Source Side Effectiveness
+  autosize,                               !- Use Side Design Flow Rate {m3/s}
+  autosize,                               !- Source Side Design Flow Rate {m3/s}
+  1.5,                                    !- Indirect Water Heating Recovery Time {hr}
+  IndirectHeatPrimarySetpoint,            !- Source Side Flow Control Mode
+  ,                                       !- Indirect Alternate Setpoint Temperature Schedule Name
+  General;                                !- End-Use Subcategory
+
+OS:Schedule:Ruleset,
+  {583daa4f-33fc-459e-bd3b-d03cf2380958}, !- Handle
+  Schedule Ruleset 1,                     !- Name
+  {dc6fe040-8bfb-4bb1-a63c-495a71160582}, !- Schedule Type Limits Name
+  {d2be6156-d5e7-4ef5-9a80-c7ca508321dd}; !- Default Day Schedule Name
+
+OS:Schedule:Day,
+  {d2be6156-d5e7-4ef5-9a80-c7ca508321dd}, !- Handle
+  Schedule Day 1,                         !- Name
+  {dc6fe040-8bfb-4bb1-a63c-495a71160582}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  24,                                     !- Hour 1
+  0,                                      !- Minute 1
+  22;                                     !- Value Until Time 1
+
+OS:ScheduleTypeLimits,
+  {dc6fe040-8bfb-4bb1-a63c-495a71160582}, !- Handle
+  Temperature,                            !- Name
+  ,                                       !- Lower Limit Value
+  ,                                       !- Upper Limit Value
+  Continuous,                             !- Numeric Type
+  Temperature;                            !- Unit Type
+
+OS:Schedule:Ruleset,
+  {7ace0490-7f63-4d5a-8948-4ce798954849}, !- Handle
+  Schedule Ruleset 2,                     !- Name
+  {dc6fe040-8bfb-4bb1-a63c-495a71160582}, !- Schedule Type Limits Name
+  {f0a6f9da-95e9-42f4-983a-368858558ffe}; !- Default Day Schedule Name
+
+OS:Schedule:Day,
+  {f0a6f9da-95e9-42f4-983a-368858558ffe}, !- Handle
+  Schedule Day 2,                         !- Name
+  {dc6fe040-8bfb-4bb1-a63c-495a71160582}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  24,                                     !- Hour 1
+  0,                                      !- Minute 1
+  60;                                     !- Value Until Time 1
+
+OS:WaterHeater:Sizing,
+  {15475dd3-2038-4a07-ad87-a753d1e8c23b}, !- Handle
+  {37833996-2fd5-45ba-b5a9-2b58c9a7f40b}, !- WaterHeater Name
+  PeakDraw,                               !- Design Mode
+  0.538503,                               !- Time Storage Can Meet Peak Draw {hr}
+  0,                                      !- Time for Tank Recovery {hr}
+  1;                                      !- Nominal Tank Volume for Autosizing Plant Connections {m3}

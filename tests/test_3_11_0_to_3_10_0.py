@@ -234,3 +234,15 @@ def test_vt_ThermalStorageChilledWaterStratified():
     # I expect the WaterHeater:Sizing object to be gone
     wh_sizings = get_objects_by_type(idf_file=idf_file, idd_object_type_name="OS:WaterHeater:Sizing")
     assert len(wh_sizings) == 0
+
+
+def test_vt_WaterHeaterMixed():
+    """This file has a WaterHeaterSizing attached to a WaterHeaterMixed, and it should be left intact."""
+    idf_file = backport_and_save(osm_rel_path=Path("WaterHeaterMixed_3_11_0.osm"))
+
+    whs = get_objects_by_type(idf_file=idf_file, idd_object_type_name="OS:WaterHeater:Mixed")
+    assert len(whs) == 1
+
+    # I expect the WaterHeater:Sizing object to be left intact
+    wh_sizings = get_objects_by_type(idf_file=idf_file, idd_object_type_name="OS:WaterHeater:Sizing")
+    assert len(wh_sizings) == 1

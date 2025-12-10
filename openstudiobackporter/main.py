@@ -48,5 +48,5 @@ def main():
     logger.info(f"Backported OSM file saved to: {idf_path}")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()

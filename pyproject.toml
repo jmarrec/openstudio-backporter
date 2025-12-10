@@ -115,6 +115,11 @@ warn_unused_configs = true
 module = 'openstudio'
 ignore_missing_imports = true
 
+[tool.coverage.run]
+omit = [
+    "openstudiobackporter/__main__.py"
+]
+
 [tool.tox]
 isolated_build = true
 requires = ["tox>=4.32"]
