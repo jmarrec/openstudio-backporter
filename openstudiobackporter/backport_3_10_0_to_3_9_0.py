@@ -1,6 +1,8 @@
 import openstudio
 from loguru import logger
 
+from openstudiobackporter.helpers import copy_object_as_is, copy_with_cutoff_fields, copy_with_deleted_fields
+
 
 def run_translation(idf_3_10_0: openstudio.IdfFile) -> openstudio.IdfFile:
     """Backport an IdfFile from 3.10.0 to 3.9.0."""
@@ -16,27 +18,16 @@ def run_translation(idf_3_10_0: openstudio.IdfFile) -> openstudio.IdfFile:
     for obj in idf_3_10_0.objects():
         iddname = obj.iddObject().name()
 
+        iddObject = idd_3_9_0.getObject(iddname).get()
+        newObject = openstudio.IdfObject(iddObject)
+
         if iddname == "OS:WaterHeater:HeatPump":
 
             # 1 Field has been inserted from 3.9.0 to 3.10.0:
             # ----------------------------------------------
             # * Tank Element Control Logic * 25
 
-            iddObject = idd_3_9_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
-
-            skip = 25
-
-            for i in range(obj.numFields()):
-                if i == skip:
-                    continue
-                elif i < skip:
-                    if value := obj.getString(i):
-                        newObject.setString(i, value.get())
-                else:
-                    if value := obj.getString(i):
-                        newObject.setString(i - 1, value.get())
-
+            copy_with_deleted_fields(obj=obj, newObject=newObject, skip_indices={25})
             targetIdf.addObject(newObject)
 
         elif iddname == 'OS:GroundHeatExchanger:Vertical':
@@ -44,35 +35,19 @@ def run_translation(idf_3_10_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # ----------------------------------------------
             # * Bore Hole Top Depth * 6
 
-            iddObject = idd_3_9_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
-
-            skip = 6
-
-            for i in range(obj.numFields()):
-                if i == skip:
-                    continue
-                elif i < skip:
-                    if value := obj.getString(i):
-                        newObject.setString(i, value.get())
-                else:
-                    if value := obj.getString(i):
-                        newObject.setString(i - 1, value.get())
-
+            copy_with_deleted_fields(obj=obj, newObject=newObject, skip_indices={6})
             targetIdf.addObject(newObject)
 
         elif iddname == 'OS:ZoneVentilation:DesignFlowRate' or iddname == "OS:SpaceInfiltration:DesignFlowRate":
-            # Last field was added
-            iddObject = idd_3_9_0.getObject(iddname).get()
-            newObject = openstudio.IdfObject(iddObject)
-
-            for i in range(obj.numFields() - 1):
-                if value := obj.getString(i):
-                    newObject.setString(i, value.get())
-
+            # 1 Field has been added (at end) from 3.9.0 to 3.10.0:
+            # -------------------------------------------
+            # * Density Basis * 13 or 26
+            cut_off = 26 if iddname == "OS:ZoneVentilation:DesignFlowRate" else 13
+            copy_with_cutoff_fields(obj=obj, newObject=newObject, cutoff_index=cut_off)
             targetIdf.addObject(newObject)
 
         else:
-            targetIdf.addObject(obj)
+            copy_object_as_is(obj=obj, newObject=newObject)
+            targetIdf.addObject(newObject)
 
     return targetIdf
