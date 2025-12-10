@@ -8,15 +8,18 @@ This projects adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
-## [0.1.2] - 2025-12-09
+## [0.1.2] - 2025-12-10
 
 ### Added
 
+- Added translation from 3.11.0 -> 3.10.0
 - Added tests for 3.9.0 -> 3.8.0
 
 ### Changed
 
 - Minor tweaks to the translation from 3.9.0 -> 3.8.0
+- Added helpers to deal with copying while deleting fields etc
+- When not touching the object, still change the iddObject it points to.
 
 ## [0.1.1] - 2025-12-09
 

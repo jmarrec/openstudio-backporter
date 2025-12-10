@@ -123,9 +123,19 @@ def run_translation(idf_3_11_0: openstudio.IdfFile) -> openstudio.IdfFile:
             # 1 Field has been added (at end) from 3.10.0 to 3.11.0:
             # ------------------------------------------------
             # * DX Heating Coil Sizing Ratio * variable
+
             cut_off = DX_HEATING_COIL_SIZING_RATIOS[iddname]
 
-            copy_with_cutoff_fields(obj=obj, newObject=newObject, cutoff_index=cut_off)
+            if iddname == "OS:AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed":
+                # This is the only field where it wasn't added at the end... Here Field 10 was changed from
+                # Minimum Outdoor Dry-Bulb Temperature for Compressor Operation to
+                # DX Heating Coil Sizing Ratio, so we need to skip it there
+                copy_object_as_is(obj=obj, newObject=newObject)
+                # Information is gone, so we reset to the OS SDK Ctor default from v3.10.0
+                newObject.setDouble(cut_off, -8.0)
+            else:
+                copy_with_cutoff_fields(obj=obj, newObject=newObject, cutoff_index=cut_off)
+
             targetIdf.addObject(newObject)
 
         elif iddname == "OS:Controller:MechanicalVentilation":
