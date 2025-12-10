@@ -23,3 +23,35 @@ def get_target(idf_file: openstudio.IdfFile, idf_obj: openstudio.IdfObject, inde
         return openstudio.OptionalIdfObject()
 
     return idf_file.getObject(openstudio.toUUID(handle_.get()))
+
+
+def copy_object_as_is(obj: openstudio.IdfObject, newObject: openstudio.IdfObject) -> None:
+    """Copy an IdfObject as is.
+
+    Even though the object didn't change, the IddObject might have changed field names or memo, etc.
+    """
+    for i in range(obj.numFields()):
+        if value := obj.getString(i):
+            newObject.setString(i, value.get())
+
+
+def copy_with_deleted_fields(
+    obj: openstudio.IdfObject, newObject: openstudio.IdfObject, skip_indices: set[int]
+) -> None:
+    """Copy an IdfObject while skipping certain field indices."""
+    offset = 0
+    for i in range(obj.numFields()):
+        if i in skip_indices:
+            offset += 1
+            continue
+        if value := obj.getString(i):
+            newObject.setString(i - offset, value.get())
+
+
+def copy_with_cutoff_fields(obj: openstudio.IdfObject, newObject: openstudio.IdfObject, cutoff_index: int) -> None:
+    """Copy an IdfObject while skipping fields from a certain index onward."""
+    for i in range(obj.numFields()):
+        if i >= cutoff_index:
+            break
+        if value := obj.getString(i):
+            newObject.setString(i, value.get())

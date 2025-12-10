@@ -4,9 +4,9 @@
 from pathlib import Path
 
 import openstudio
-from helpers import get_objects_by_type
 
 from openstudiobackporter import Backporter
+from openstudiobackporter.helpers import get_objects_by_type
 
 THIS_DIR = Path(__file__).parent / "3_9_0"
 

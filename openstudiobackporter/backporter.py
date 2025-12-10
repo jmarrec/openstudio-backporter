@@ -3,7 +3,7 @@ from pathlib import Path
 import openstudio
 from loguru import logger
 
-from openstudiobackporter import backport_3_9_0_to_3_8_0, backport_3_10_0_to_3_9_0
+from openstudiobackporter import backport_3_9_0_to_3_8_0, backport_3_10_0_to_3_9_0, backport_3_11_0_to_3_10_0
 
 
 def run_translation_noop(idf_file: openstudio.IdfFile) -> openstudio.IdfFile:
@@ -15,10 +15,11 @@ VERSION_TRANSLATION_MAP = {
     "3.8.0": run_translation_noop,
     "3.9.0": backport_3_9_0_to_3_8_0.run_translation,
     "3.10.0": backport_3_10_0_to_3_9_0.run_translation,
+    "3.11.0": backport_3_11_0_to_3_10_0.run_translation,
 }
 
 # Harcoding because of mkdocs
-KNOWN_TO_VERSIONS = ["3.8.0", "3.9.0"]
+KNOWN_TO_VERSIONS = ["3.8.0", "3.9.0", "3.10.0"]
 """List of all known versions that can be translated *to*."""
 assert KNOWN_TO_VERSIONS == list(VERSION_TRANSLATION_MAP.keys())[:-1]
 

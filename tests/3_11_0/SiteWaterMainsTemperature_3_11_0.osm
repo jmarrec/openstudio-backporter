@@ -1,0 +1,13 @@
+
+OS:Version,
+  {b6e61ede-f481-4341-9a0d-51032ddc829f}, !- Handle
+  3.11.0;                                 !- Version Identifier
+
+OS:Site:WaterMainsTemperature,
+  {7b6cc74d-15d7-4c99-8167-5a87099ba702}, !- Handle
+  CorrelationFromWeatherFile,             !- Calculation Method
+  ,                                       !- Temperature Schedule Name
+  ,                                       !- Annual Average Outdoor Air Temperature {C}
+  ,                                       !- Maximum Difference In Monthly Average Outdoor Air Temperatures {deltaC}
+  1,                                      !- Temperature Multiplier {dimensionless}
+  0;                                      !- Temperature Offset {deltaC}

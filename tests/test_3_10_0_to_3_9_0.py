@@ -4,9 +4,9 @@
 from pathlib import Path
 
 import openstudio
-from helpers import get_objects_by_type, get_target
 
 from openstudiobackporter import Backporter
+from openstudiobackporter.helpers import get_objects_by_type, get_target
 
 THIS_DIR = Path(__file__).parent / "3_10_0"
 
@@ -24,7 +24,7 @@ def backport_and_save(osm_rel_path: Path) -> openstudio.IdfFile:
     return idf_file
 
 
-def test_vt_GroundHeatExchangerVertical_3_9_0():
+def test_vt_GroundHeatExchangerVertical():
     idf_file = backport_and_save(osm_rel_path=Path("GroundHeatExchangerVertical_3_10_0.osm"))
 
     ghe_verts = get_objects_by_type(idf_file=idf_file, idd_object_type_name="OS:GroundHeatExchanger:Vertical")
