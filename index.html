@@ -280,6 +280,54 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="openstudio-backporter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#CLI" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Library" class="md-nav__link">
+    <span class="md-ellipsis">
+      Library
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -431,6 +479,54 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="openstudio-backporter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#CLI" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Library" class="md-nav__link">
+    <span class="md-ellipsis">
+      Library
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -460,14 +556,40 @@
 <a href="https://github.com/jmarrec/openstudio-backporter/actions/workflows/dev.yml"><img alt="Build Status" src="https://github.com/jmarrec/openstudio-backporter/actions/workflows/dev.yml/badge.svg" /></a>
 <a href="https://codecov.io/github/jmarrec/openstudio-backporter"><img alt="codecov" src="https://codecov.io/gh/jmarrec/openstudio-backporter/branch/main/graphs/badge.svg" /></a></p>
 <p>A small library to backport an <a href="https://github.com/NREL/OpenStudio">OpenStudio</a> OSM model to an older version.
-I am only added backports as old as I need to.</p>
-<p>A Jupyter Notebook <a href="../openstudio-backporter_Demonstration.ipynb">openstudio-backporter_Demonstration.ipynb</a> can serve as a small demonstration of the features.</p>
+I am only adding backports as old as I need to.</p>
 <ul>
 <li>Documentation: <a href="https://jmarrec.github.io/openstudio-backporter">https://jmarrec.github.io/openstudio-backporter</a></li>
 <li>GitHub: <a href="https://github.com/jmarrec/openstudio-backporter">https://github.com/jmarrec/openstudio-backporter</a></li>
 <li>PyPI: <a href="https://pypi.org/project/openstudio-backporter/">https://pypi.org/project/openstudio-backporter/</a></li>
 <li>TestPyPI: <a href="https://test.pypi.org/project/openstudio-backporter/">https://test.pypi.org/project/openstudio-backporter/</a></li>
 </ul>
+<h3 id="Install">Install<a class="headerlink" href="#Install" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>openstudio-backporter
+</code></pre></div>
+<h3 id="Usage">Usage<a class="headerlink" href="#Usage" title="Permanent link">&para;</a></h3>
+<h4 id="CLI">CLI<a class="headerlink" href="#CLI" title="Permanent link">&para;</a></h4>
+<p>A CLI feature is provided, that you can invoke via <code>python -m openstudiobackporter</code></p>
+<p>See <code>python -m openstudiobackporter --help</code> for the list of command line parameters and how to use it.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>openstudiobackporter<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--to-version<span class="w"> </span><span class="m">3</span>.8.0<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--save-intermediate<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--verbose<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>/path/to/model3_10_0.osm
+</code></pre></div>
+<h4 id="Library">Library<a class="headerlink" href="#Library" title="Permanent link">&para;</a></h4>
+<p>You can also use it as a library:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openstudiobackporter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Backporter</span>
+
+<span class="n">backporter</span> <span class="o">=</span> <span class="n">Backporter</span><span class="p">(</span><span class="n">to_version</span><span class="o">=</span><span class="s2">&quot;3.9.0&quot;</span><span class="p">,</span> <span class="n">save_intermediate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">idf_file</span> <span class="o">=</span> <span class="n">backporter</span><span class="o">.</span><span class="n">backport_file</span><span class="p">(</span><span class="n">osm_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/path/to/model_3_10_0.osm&quot;</span><span class="p">))</span>
+
+<span class="c1"># or</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">openstudio</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exampleModel</span><span class="p">()</span>
+<span class="n">backporter</span><span class="o">.</span><span class="n">backport</span><span class="p">(</span><span class="n">idf_file</span><span class="o">=</span><span class="n">model</span><span class="p">)</span> <span class="c1"># or model.toIdfFile()</span>
+</code></pre></div>
+<hr />
 <p>This is free software (MIT License) contributed by <a href="https://www.effibem.com">EffiBEM</a>.</p>
 <p>Leveraging software, <a href="https://www.effibem.com">EffiBEM</a> specializes in providing new ways to streamline your workflows and create new tools that work with limited inputs for your specific applications. We also offer support and training services on BEM simulation engines (OpenStudio and EnergyPlus).</p>
 
