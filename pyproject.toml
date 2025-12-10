@@ -69,6 +69,8 @@ bump2version = "^1.0.1"
 mypy = "^1.19.0"
 flake8 = "^7.3.0"
 flake8-docstrings = "^1.7.0"
+black = "^25.12.0"
+isort = "^7.0.0"
 
 [[tool.poetry.source]]
 name = "testpypi"
