@@ -8,9 +8,31 @@
 
 
 A small library to backport an [OpenStudio](https://github.com/NREL/OpenStudio) OSM model to an older version.
-I am only added backports as old as I need to.
+I am only adding backports as old as I need to.
 
-A Jupyter Notebook [openstudio-backporter_Demonstration.ipynb](openstudio-backporter_Demonstration.ipynb) can serve as a small demonstration of the features.
+A CLI feature is provided, that you can invoke via `python -m openstudiobackporter`
+
+See `python -m openstudiobackporter --help` for the list of command line parameters and how to use it.
+
+Example:
+
+```shell
+python -m openstudiobackporter --to-version 3.8.0 --save-intermediate --verbose /path/to/model3_10_0.osm
+```
+
+You can also use it as a library:
+
+```python
+from pathlib import Path
+from openstudiobackporter import Backporter
+
+backporter = Backporter(to_version="3.9.0", save_intermediate=False)
+idf_file = backporter.backport_file(osm_path=Path("/path/to/model_3_10_0.osm"))
+
+# or
+model = openstudio.model.exampleModel()
+backporter.backport(idf_file=model) # or model.toIdfFile()
+```
 
 
 * Documentation: <https://jmarrec.github.io/openstudio-backporter>
