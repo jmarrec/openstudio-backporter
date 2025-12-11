@@ -11,7 +11,7 @@ sys.path.insert(0, '/Users/julien/Software/Others/OS-build-release/Products/pyth
 from openstudiobackporter.backporter import KNOWN_TO_VERSIONS, Backporter
 
 
-def main():
+def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="openstudiobackporter", description="Backport an OpenStudio Model (OSM) file to an earlier version."
     )
@@ -33,7 +33,13 @@ def main():
 
     parser.add_argument("osm_path", type=Path, help="Path to the input OpenStudio Model (OSM) file.")
 
-    args = parser.parse_args()
+    return parser
+
+
+def main(args_: list[str] | None = None) -> None:
+
+    parser = get_parser()
+    args = parser.parse_args(args_)
 
     if args.verbose:
         logger.remove()

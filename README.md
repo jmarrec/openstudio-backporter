@@ -50,7 +50,7 @@ idf_file = backporter.backport_file(osm_path=Path("/path/to/model_3_10_0.osm"))
 
 # or
 model = openstudio.model.exampleModel()
-backporter.backport(idf_file=model) # or model.toIdfFile()
+idf_file = backporter.backport(idf_file=model) # or model.toIdfFile()
 ```
 
 
