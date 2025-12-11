@@ -7,7 +7,8 @@
 [![codecov](https://codecov.io/gh/jmarrec/openstudio-backporter/branch/main/graphs/badge.svg)](https://codecov.io/github/jmarrec/openstudio-backporter)
 
 A small library to backport an [OpenStudio](https://github.com/NREL/OpenStudio) OSM model to an older version.
-I am only adding backports as old as I need to.
+
+**Note**: I am only adding backports as old as I need to. Contribution welcomed.
 
 * Documentation: <https://jmarrec.github.io/openstudio-backporter>
 * GitHub: <https://github.com/jmarrec/openstudio-backporter>
