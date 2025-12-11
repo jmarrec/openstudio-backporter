@@ -118,8 +118,8 @@ warn_unused_configs = true
 module = 'openstudio'
 ignore_missing_imports = true
 
-[tool.pytest.ini_options]
-addopts = "--cov=openstudiobackporter --cov-branch --cov-report=html --cov-report=term-missing"
+# [tool.pytest.ini_options]
+# addopts = "--cov=openstudiobackporter --cov-branch --cov-report=html --cov-report=term-missing"
 
 [tool.coverage.run]
 omit = [
