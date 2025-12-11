@@ -11,7 +11,7 @@ def get_objects_by_type(idf_file: openstudio.IdfFile, idd_object_type_name: str)
 
 def brief_description(idf_obj: openstudio.IdfObject) -> str:
     """Get a brief description of the IdfObject."""
-    if name_ := idf_obj.nameString():
+    if (name_ := idf_obj.name()).is_initialized():
         return f"{idf_obj.iddObject().name()} '{name_}'"
     else:
         return f"{idf_obj.iddObject().name()}"
@@ -20,7 +20,7 @@ def brief_description(idf_obj: openstudio.IdfObject) -> str:
 def get_target(idf_file: openstudio.IdfFile, idf_obj: openstudio.IdfObject, index: int) -> openstudio.OptionalIdfObject:
     """Get the target object for the Inlet Air Mixer Schedule."""
     # Can't call getTarget, this is not a Workspace
-    handle_ = idf_obj.getString(index)
+    handle_: openstudio.OptionalString = idf_obj.getString(index, returnDefault=False, returnUninitializedEmpty=True)
     if not handle_.is_initialized():
         print(f"For {brief_description(idf_obj=idf_obj)}, String at index {index} is not initialized.")
         return openstudio.OptionalIdfObject()

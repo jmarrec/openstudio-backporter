@@ -24,8 +24,8 @@ def run_translation(idf_3_9_0: openstudio.IdfFile) -> openstudio.IdfFile:
         iddname = obj.iddObject().name()
 
         iddObject_ = idd_3_8_0.getObject(iddname)
-        if not iddObject_.is_initialized():
-            # Object type doesn't exist in target version, skip it
+        if not iddObject_.is_initialized():  # pragma: no cover
+            # Object type doesn't exist in target version, skip it (None in 3.9.0 to 3.8.0 backport)
             logger.warning(f"{brief_description(idf_obj=obj)} does not exist in version 3.8.0, skipping.")
             continue
 
