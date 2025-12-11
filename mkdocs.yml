@@ -59,6 +59,7 @@ plugins:
             show_signature: true
             show_signature_annotations: true
             separate_signature: false
+  - markdown-exec
 extra:
   social:
     - icon: fontawesome/brands/bluesky

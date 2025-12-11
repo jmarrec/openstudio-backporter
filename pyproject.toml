@@ -55,6 +55,7 @@ mkdocs-material = "^9.6.15"
 mkdocstrings = "^0.29.1"
 mkdocstrings-python = "^1.16.12"
 mkdocs-autorefs = "^1.4.2"
+markdown-exec = {extras = ["ansi"], version = "^1.12.1"}
 
 [tool.poetry.group.dev]
 optional = true

@@ -1023,6 +1023,25 @@ docs = ["mdx_gh_links (>=0.2)", "mkdocs (>=1.6)", "mkdocs-gen-files", "mkdocs-li
 testing = ["coverage", "pyyaml"]
 
 [[package]]
+name = "markdown-exec"
+version = "1.12.1"
+description = "Utilities to execute code blocks in Markdown files."
+optional = false
+python-versions = ">=3.10"
+groups = ["docs"]
+files = [
+    {file = "markdown_exec-1.12.1-py3-none-any.whl", hash = "sha256:a645dce411fee297f5b4a4169c245ec51e20061d5b71e225bef006e87f3e465f"},
+    {file = "markdown_exec-1.12.1.tar.gz", hash = "sha256:eee8ba0df99a5400092eeda80212ba3968f3cbbf3a33f86f1cd25161538e6534"},
+]
+
+[package.dependencies]
+pygments-ansi-color = {version = ">=0.3", optional = true, markers = "extra == \"ansi\""}
+pymdown-extensions = ">=9"
+
+[package.extras]
+ansi = ["pygments-ansi-color (>=0.3)"]
+
+[[package]]
 name = "markdown-it-py"
 version = "3.0.0"
 description = "Python port of markdown-it. Markdown parsing, done right!"
@@ -1657,6 +1676,21 @@ files = [
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "pygments-ansi-color"
+version = "0.3.0"
+description = ""
+optional = false
+python-versions = ">=3.7"
+groups = ["docs"]
+files = [
+    {file = "pygments-ansi-color-0.3.0.tar.gz", hash = "sha256:7018954cf5b11d1e734383a1bafab5af613213f246109417fee3f76da26d5431"},
+    {file = "pygments_ansi_color-0.3.0-py3-none-any.whl", hash = "sha256:7eb063feaecadad9d4d1fd3474cbfeadf3486b64f760a8f2a00fc25392180aba"},
+]
+
+[package.dependencies]
+pygments = "!=2.7.3"
+
+[[package]]
 name = "pymdown-extensions"
 version = "10.16"
 description = "Extension pack for Python Markdown."
@@ -2263,4 +2297,4 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "85281662f3793abebfca4e9a7ab9ae29ea02a9eea9c38c8e325e5319e8edd6df"
+content-hash = "ee4109c81bbc6924c0fbcda39e8ed35158a13c76ae80d3af7eed408ac7b14bbe"
