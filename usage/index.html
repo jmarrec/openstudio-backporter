@@ -48,6 +48,10 @@
       
     
     
+      <link rel="stylesheet" href="../assets/_markdown_exec_pyodide.css">
+    
+      <link rel="stylesheet" href="../assets/_markdown_exec_ansi.css">
+    
       <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -480,9 +484,28 @@
 </code></pre></div>
 <h2 id="CLI">CLI<a class="headerlink" href="#CLI" title="Permanent link">&para;</a></h2>
 <p>This also ships with a CLI, that you can invoke via <code>python -m openstudiobackporter</code></p>
-<p>See <code>python -m openstudiobackporter --help</code> for the list of command line parameters and how to use it.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>openstudiobackporter<span class="w"> </span>--to-version<span class="w"> </span><span class="m">3</span>.8.0<span class="w"> </span>--save-intermediate<span class="w"> </span>--verbose<span class="w"> </span>/path/to/model3_10_0.osm
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>openstudiobackporter<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--to-version<span class="w"> </span><span class="m">3</span>.8.0<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--save-intermediate<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--verbose<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>/path/to/model3_10_0.osm
+</code></pre></div>
+<p>See <code>python -m openstudiobackporter --help</code> for the list of command line parameters and how to use it.</p>
+<div class="highlight"><pre><span></span><code>usage: openstudiobackporter [-h] -t {3.8.0,3.9.0,3.10.0} [-s] [-v] osm_path
+
+Backport an OpenStudio Model (OSM) file to an earlier version.
+
+positional arguments:
+  osm_path              Path to the input OpenStudio Model (OSM) file.
+
+options:
+  -h, --help            show this help message and exit
+  -t {3.8.0,3.9.0,3.10.0}, --to-version {3.8.0,3.9.0,3.10.0}
+                        Target OpenStudio version to backport to.
+  -s, --save-intermediate
+                        Save intermediate versions during backporting
+  -v, --verbose         Enable verbose output
 </code></pre></div>
 
 
@@ -564,6 +587,8 @@
     
     
       <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="../assets/_markdown_exec_pyodide.js"></script>
       
     
   </body>
