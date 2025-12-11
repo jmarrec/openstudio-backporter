@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "openstudio-backporter"
-version = "0.1.5"
+version = "0.1.6"
 homepage = "https://github.com/jmarrec/openstudio-backporter"
 description = "A small library to backport an OpenStudio OSM model to an older version."
 authors = ["Julien Marrec <contact@effibem.com>"]
@@ -117,6 +117,9 @@ warn_unused_configs = true
 [[tool.mypy.overrides]]
 module = 'openstudio'
 ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--cov=openstudiobackporter --cov-branch --cov-report=html --cov-report=term-missing"
 
 [tool.coverage.run]
 omit = [
