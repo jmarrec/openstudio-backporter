@@ -84,7 +84,7 @@ def run_translation(idf_3_11_0: openstudio.IdfFile) -> openstudio.IdfFile:
 
         elif iddname == "OS:WaterHeater:Sizing":
             wh_ = get_target(idf_file=idf_3_11_0, idf_obj=obj, index=1)
-            if wh_.is_initialized():
+            if wh_.is_initialized():  # pragma: no cover
                 whIddObject = wh_.get().iddObject()
                 if whIddObject.name() == "OS:ThermalStorage:ChilledWater:Stratified":
                     # skip this object
