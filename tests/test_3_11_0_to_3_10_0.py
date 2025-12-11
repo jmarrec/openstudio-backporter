@@ -246,3 +246,11 @@ def test_vt_WaterHeaterMixed():
     # I expect the WaterHeater:Sizing object to be left intact
     wh_sizings = get_objects_by_type(idf_file=idf_file, idd_object_type_name="OS:WaterHeater:Sizing")
     assert len(wh_sizings) == 1
+
+
+def test_vt_WaterHeaterHeatPump_New():
+    """This object was added in 3.10.0, so should not be present in backported file."""
+    idf_file = backport_and_save(osm_rel_path=Path("HeatPumpAirToWater_New_3_11_0.osm"))
+
+    hpwhs = get_objects_by_type(idf_file=idf_file, idd_object_type_name="OS:HeatPump:AirToWater")
+    assert len(hpwhs) == 0

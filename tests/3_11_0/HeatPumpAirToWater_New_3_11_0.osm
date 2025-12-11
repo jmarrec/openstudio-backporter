@@ -1,0 +1,27 @@
+
+OS:Version,
+  {f612e6e7-0bbf-45e5-a308-329b5f331538}, !- Handle
+  3.11.0,                                 !- Version Identifier
+  rc1;                                    !- Prerelease Identifier
+
+OS:HeatPump:AirToWater,
+  {09e67e60-182a-4086-b734-64e80fdf0bbf}, !- Handle
+  Heat Pump Air To Water 1,               !- Name
+  Load,                                   !- Operating Mode Control Method
+  SingleMode,                             !- Operating Mode Control Option for Multiple Unit
+  ,                                       !- Operating Mode Control Schedule Name
+  0,                                      !- Minimum Part Load Ratio
+  ,                                       !- Air Inlet Node Name
+  ,                                       !- Air Outlet Node Name
+  10,                                     !- Maximum Outdoor Dry Bulb Temperature For Defrost Operation
+  None,                                   !- Heat Pump Defrost Control
+  0.058333,                               !- Heat Pump Defrost Time Period Fraction
+  0,                                      !- Resistive Defrost Heater Capacity {W}
+  ,                                       !- Defrost Energy Input Ratio Function of Temperature Curve Name
+  1,                                      !- Heat Pump Multiplier
+  VariableSpeed,                          !- Control Type
+  0,                                      !- Crankcase Heater Capacity {W}
+  ,                                       !- Crankcase Heater Capacity Function of Temperature Curve Name
+  10,                                     !- Maximum Ambient Temperature for Crankcase Heater Operation {C}
+  ,                                       !- Heating Operation Mode
+  ;                                       !- Cooling Operation Mode

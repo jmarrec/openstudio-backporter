@@ -89,6 +89,7 @@ def run_translation(idf_3_11_0: openstudio.IdfFile) -> openstudio.IdfFile:
                 if whIddObject.name() == "OS:ThermalStorage:ChilledWater:Stratified":
                     # skip this object
                     continue
+
             copy_object_as_is(obj=obj, newObject=newObject)
             targetIdf.addObject(newObject)
 
