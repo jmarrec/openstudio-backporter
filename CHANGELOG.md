@@ -8,6 +8,12 @@ This projects adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-01-26
+
+### Changed
+
+- PyPi links
+
 ## [0.1.6] - 2025-12-11
 
 ### Changed
@@ -58,9 +64,11 @@ This projects adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - First release on PyPI.
 - Added backporting from 3.10.0 -> 3.9.0 and 3.9.0 -> 3.8.0
 
-[Unreleased]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.0...HEAD
-[0.1.3]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.4...v0.1.5
-[0.1.3]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.3...v0.1.4
+[Unreleased]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.7...HEAD
+[0.1.7]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.6...v0.1.7
+[0.1.6]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.5...v0.1.6
+[0.1.5]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.4...v0.1.5
+[0.1.4]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/jmarrec/openstudio-backporter/compare/v0.1.0...v0.1.1

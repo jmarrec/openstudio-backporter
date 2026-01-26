@@ -1,8 +1,7 @@
 [tool]
 [tool.poetry]
 name = "openstudio-backporter"
-version = "0.1.6"
-homepage = "https://github.com/jmarrec/openstudio-backporter"
+version = "0.1.7"
 description = "A small library to backport an OpenStudio OSM model to an older version."
 authors = ["Julien Marrec <contact@effibem.com>"]
 readme = "README.md"
@@ -21,6 +20,13 @@ packages = [
     { include = "openstudiobackporter" },
     { include = "tests", format = "sdist" },
 ]
+
+[tool.poetry.urls]
+Homepage = "https://effibem.com"
+Documentation = "https://jmarrec.github.io/openstudio-backporter"
+Repository = "https://github.com/jmarrec/openstudio-backporter"
+Changelog = "https://github.com/jmarrec/openstudio-backporter/blob/main/CHANGELOG.md"
+Issues = "https://github.com/jmarrec/openstudio-backporter/issues"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
