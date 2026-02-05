@@ -12,16 +12,22 @@ nav:
   - Changelog: changelog.md
 theme:
   name: material
+  logo: assets/logo.png
+  favicon: assets/favicon-96x96.png
   language: en
   #logo: assets/logo.png
   palette:
     scheme: preference
-    primary: light blue
-    accent: deep orange
+    primary: indigo
+    accent: indigo
+  font:
+    text: Roboto
   features:
     - navigation.indexes
     - navigation.instant
     - navigation.tabs.sticky
+  icon:
+    repo: fontawesome/brands/github
 markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
@@ -60,16 +66,23 @@ plugins:
             show_signature_annotations: true
             separate_signature: false
   - markdown-exec
+
+copyright: Copyright &copy; 2026 <a href="https://effibem.com/">EffiBEM</a>
 extra:
+  generator: false
   social:
+    - icon: fontawesome/solid/link
+      link: https://effibem.com
+      name: EffiBEM
+      link: https:/
     - icon: fontawesome/brands/bluesky
-      # replace with your own bluesky link below
       link: https://bsky.app/profile/julienmarrec.bsky.social
       name: Bluesky
     - icon: fontawesome/brands/twitter
-      # replace with your own tweet link below
-      link: https://twitter.com/MarrecJulien
+      link: https://x.com/MarrecJulien
       name: Tweet
     - icon: fontawesome/brands/github
       link: https://github.com/jmarrec/openstudio-backporter
       name: Github
+    - icon: material/email
+      link: "mailto:contact@effibem.com"
