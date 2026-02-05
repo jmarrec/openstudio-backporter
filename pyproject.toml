@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "openstudio-backporter"
-version = "0.1.7"
+version = "0.1.8"
 description = "A small library to backport an OpenStudio OSM model to an older version."
 authors = ["Julien Marrec <contact@effibem.com>"]
 readme = "README.md"
