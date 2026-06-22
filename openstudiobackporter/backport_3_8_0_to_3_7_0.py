@@ -9,6 +9,147 @@ from openstudiobackporter.helpers import (
 )
 
 
+def _evaluate_regular_curve(curve_obj: openstudio.IdfObject, x_values: list[float]) -> list[float]:
+    """Evaluate a curve object at a given x value.
+
+    Args:
+    -----
+    * curve_obj: (openstudio.IdfObject) The curve object to evaluate
+    * x_values: (list[float]) The x values at which to evaluate the curve
+
+    Returns:
+    -------
+    * (list[float]) The evaluated y values of the curve at the given x values
+
+    Preconditions:
+    --------------
+    * curve_obj must be a valid curve object (not OS:Table:Lookup)
+    * It assumes the Curve object did not get any IDD changes between 3.8.0 and the version of openstudio you use
+    """
+
+    curve_idd = curve_obj.iddObject()
+    curve_idd_name = curve_idd.name()
+    if curve_idd_name == "OS:Table:Lookup":
+        raise ValueError("OS:Table:Lookup curves cannot be evaluated directly")
+
+    m = openstudio.model.Model()
+
+    model_curve_idd = m.iddFile().getObject(curve_idd_name)
+    assert model_curve_idd.is_initialized(), f"Curve type '{curve_idd_name}' not found in IddFile"
+    model_curve_idd = model_curve_idd.get()
+
+    # We check that the IDD matches the one in the model, to ensure that the curve object is compatible with the model
+    n_this = curve_idd.numFields() + curve_idd.properties().numExtensible
+    n_model = model_curve_idd.numFields() + model_curve_idd.properties().numExtensible
+    if n_this != n_model:
+        raise ValueError(
+            f"Curve object of type '{curve_idd_name}' has {curve_idd.numFields()} fields, "
+            f"but the model expects {model_curve_idd.numFields()} fields. "
+            "This indicates that the curve object is not compatible with the model."
+        )
+    for i in range(n_this):
+        this_field = curve_idd.getField(i).get()
+        model_field = model_curve_idd.getField(i).get()
+        if this_field.name() != model_field.name():
+            raise ValueError(
+                f"Curve object of type '{curve_idd_name}' has field '{this_field.name()}' at index {i}, "
+                f"but the model expects field '{model_field.name()}'. "
+                "This indicates that the curve object is not compatible with the model."
+            )
+
+    o_ = m.addObject(openstudio.IdfObject(model_curve_idd))
+    assert o_.is_initialized(), f"Failed to add curve object of type '{curve_idd_name}' to model"
+    curve = o_.get().to_Curve().get()
+
+    if curve.numVariables() != 1:
+        raise ValueError(
+            f"Curve object of type '{curve_idd_name}' has {curve.numVariables()} variables, but only 1 is supported"
+        )
+
+    for i in range(curve_obj.numFields()):
+        if value := curve_obj.getString(i):
+            curve.setString(i, value.get())
+
+    return [curve.evaluate(x) for x in x_values]
+
+
+def _evaluate_table_lookup(
+    idf_3_8_0: openstudio.IdfFile, curve_obj: openstudio.IdfObject, x_values: list[float]
+) -> list[float] | None:
+    if curve_obj.iddObject().name() != "OS:Table:Lookup":
+        raise ValueError("Only OS:Table:Lookup curves are accepted")
+
+    if curve_obj.getString(3).get().lower() != 'divisoronly':
+        logger.warning(f"{brief_description(idf_obj=curve_obj)} is not 'DivisorOnly', cannot evaluate.")
+        return None
+    divisor = curve_obj.getDouble(4).value_or(1.0)
+    assert divisor > 0, f"{brief_description(idf_obj=curve_obj)}: Divisor must be greater than 0, got {divisor}"
+
+    ind_var_list_uid = openstudio.toUUID(curve_obj.getString(2).get())
+    ind_var_list_ = idf_3_8_0.getObject(ind_var_list_uid)
+    if not ind_var_list_.is_initialized():
+        raise ValueError(f"{brief_description(idf_obj=curve_obj)}: independent variable list is not found.")
+    ind_var_list = ind_var_list_.get()
+    if ind_var_list.numExtensibleGroups() != 1:
+        raise ValueError(
+            f"{brief_description(idf_obj=curve_obj)}: independent variable list has "
+            f"{ind_var_list.numExtensibleGroups()} extensible groups, expected 1."
+        )
+    ind_var_uid = openstudio.toUUID(ind_var_list.getExtensibleGroup(0).getString(0).get())
+    ind_var_ = idf_3_8_0.getObject(ind_var_uid)
+    if not ind_var_.is_initialized():
+        raise ValueError(f"{brief_description(idf_obj=curve_obj)}: independent variable is not found.")
+    ind_var = ind_var_.get()
+
+    interp_method = ind_var.getString(2).get().lower()
+    extrap_method = ind_var.getString(3).get().lower()
+    if interp_method != 'linear':
+        logger.warning(f"{brief_description(idf_obj=ind_var)}: not 'Linear' for interpolation, " "cannot evaluate.")
+        return None
+    if extrap_method != 'linear':
+        logger.warning(f"{brief_description(idf_obj=ind_var)}: not 'Linear' for extrapolation, " "cannot evaluate.")
+        return None
+
+    y_values: list[float | None] = [None for _ in x_values]
+
+    if curve_obj.numExtensibleGroups() != ind_var.numExtensibleGroups():
+        raise ValueError(
+            f"{brief_description(idf_obj=curve_obj)}: the number of extensible groups in the curve and "
+            "independent variable do not match."
+        )
+
+    xs = []
+    ys = []
+    for i, (x_eg, y_eg) in enumerate(zip(ind_var.extensibleGroups(), curve_obj.extensibleGroups())):
+        x = x_eg.getDouble(0).get()
+        y = y_eg.getDouble(0).get()
+        xs.append(x)
+        ys.append(y / divisor)
+
+    for i, x in enumerate(x_values):
+        if x < xs[0] or x > xs[-1]:
+            logger.warning(
+                f"{brief_description(idf_obj=curve_obj)}: the x value {x} is outside the range of the independent "
+                f"variable ({xs[0]} to {xs[-1]}), cannot evaluate."
+            )
+            continue
+
+        for j in range(1, len(xs)):
+            if x <= xs[j]:
+                # Linear interpolation
+                y = ys[j - 1] + (ys[j] - ys[j - 1]) * (x - xs[j - 1]) / (xs[j] - xs[j - 1])
+                y_values[i] = y
+                break
+
+    # Verify that all x values were evaluated
+    for i, y in enumerate(y_values):
+        if y is None:
+            logger.warning(f"{brief_description(idf_obj=curve_obj)}: the x value {x_values[i]} could not be evaluated.")
+            return None
+
+    return y_values  # type: ignore[return-value]
+
+
 def run_translation(idf_3_8_0: openstudio.IdfFile) -> openstudio.IdfFile:
     """Backport an IdfFile from 3.8.0 to 3.7.0."""
     logger.info("Backporting from 3.8.0 to 3.7.0")
@@ -56,28 +197,36 @@ def run_translation(idf_3_8_0: openstudio.IdfFile) -> openstudio.IdfFile:
 
             # loop through the effectiveness curves and convert them
             for e100, e75, ec in zip(eff_100_indices, eff_75_indices, eff_curve_indices):
-                curve_id = openstudio.toUUID(obj.getField(ec).get())
-                curve_obj = idf_3_8_0.getObject(curve_id)
-                if curve_obj:
-                    curve_obj = curve_obj.get()
+                curve_uid = openstudio.toUUID(obj.getField(ec).get())
+                curve_obj_ = idf_3_8_0.getObject(curve_uid)
+                if curve_obj_:
+                    curve_obj = curve_obj_.get()
                     curve_idd_name = curve_obj.iddObject().name()
-                    if curve_idd_name == "OS:Table:Lookup":  # pull the value from the table
-                        if e75_value := curve_obj.getDouble(11):
-                            newObject.setDouble(e75, e75_value.get())
-                    elif curve_idd_name == "OS:Curve:Quadratic":  # reverse translate the curve and evaluate it
-                        # collect all of the objects the curve references
-                        temp_model = openstudio.model.Model()
-                        hx_curve = openstudio.model.CurveQuadratic(temp_model)
-                        if coeff_value := curve_obj.getDouble(2):
-                            hx_curve.setCoefficient1Constant(coeff_value.get())
-                        if coeff_value := curve_obj.getDouble(3):
-                            hx_curve.setCoefficient2x(coeff_value.get())
-                        if coeff_value := curve_obj.getDouble(4):
-                            hx_curve.setCoefficient3xPOW2(coeff_value.get())
-                        if e100_value := obj.getDouble(e100):
-                            e100_value = e100_value.get()
-                            print(hx_curve.evaluate(0.75) * e100_value)
-                            newObject.setDouble(e75, hx_curve.evaluate(0.75) * e100_value)
+                    x_values = [0.75, 1.0]
+
+                    if curve_idd_name == "OS:Table:Lookup":
+                        y_values = _evaluate_table_lookup(idf_3_8_0=idf_3_8_0, curve_obj=curve_obj, x_values=x_values)
+                        if y_values is None:
+                            logger.warning(
+                                f"{brief_description(idf_obj=obj)}: Effectiveness curve '{curve_obj.name().get()}' "
+                                "is a table lookup that cannot be evaluated, skipping conversion and using "
+                                "constant effectiveness instead."
+                            )
+                            y_values = [1.0, 1.0]
+                    else:
+                        y_values = _evaluate_regular_curve(curve_obj=curve_obj, x_values=x_values)
+
+                    e100_value = obj.getDouble(e100).value_or(1.0)
+                    y75, y100 = y_values
+
+                    newObject.setDouble(e75, y75 * e100_value)
+                    # If y100 isn't near 1.0, we warn
+                    if abs(y100 - 1.0) > 1e-3:
+                        logger.warning(
+                            f"{brief_description(idf_obj=obj)}: Effectiveness curve '{curve_obj.name().get()}' "
+                            f"evaluated at 100% flow is {y100:.6f}, expected 1.0. "
+                            "This may indicate that the curve is not normalized to 1.0 at 100% flow."
+                        )
 
                 else:  # if no curve has been assigned, assume a constant effectiveness
                     if value := obj.getString(e100):
