@@ -490,7 +490,8 @@
 <span class="w">       </span>/path/to/model3_10_0.osm
 </code></pre></div>
 <p>See <code>python -m openstudiobackporter --help</code> for the list of command line parameters and how to use it.</p>
-<div class="highlight"><pre><span></span><code>usage: openstudiobackporter [-h] -t {3.8.0,3.9.0,3.10.0} [-s] [-v] osm_path
+<div class="highlight"><pre><span></span><code>usage: openstudiobackporter [-h] -t {3.7.0,3.8.0,3.9.0,3.10.0} [-s] [-v]
+                            osm_path
 
 Backport an OpenStudio Model (OSM) file to an earlier version.
 
@@ -499,7 +500,7 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  -t {3.8.0,3.9.0,3.10.0}, --to-version {3.8.0,3.9.0,3.10.0}
+  -t {3.7.0,3.8.0,3.9.0,3.10.0}, --to-version {3.7.0,3.8.0,3.9.0,3.10.0}
                         Target OpenStudio version to backport to.
   -s, --save-intermediate
                         Save intermediate versions during backporting
