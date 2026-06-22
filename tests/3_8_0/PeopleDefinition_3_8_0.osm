@@ -1,0 +1,17 @@
+
+OS:Version,
+  {fcb90c28-5351-4426-afa3-2fae46bd0248}, !- Handle
+  3.8.0;                                  !- Version Identifier
+
+OS:People:Definition,
+  {ede10f40-c28d-4de2-b32b-570d4e205850}, !- Handle
+  People Definition 1,                    !- Name
+  People,                                 !- Number of People Calculation Method
+  0,                                      !- Number of People {people}
+  ,                                       !- People per Space Floor Area {person/m2}
+  ,                                       !- Space Floor Area per Person {m2/person}
+  0.3,                                    !- Fraction Radiant
+  ,                                       !- Sensible Heat Fraction
+  ,                                       !- Carbon Dioxide Generation Rate {m3/s-W}
+  ,                                       !- Enable ASHRAE 55 Comfort Warnings
+  EnclosureAveraged;                      !- Mean Radiant Temperature Calculation Type

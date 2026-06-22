@@ -1,0 +1,40 @@
+
+OS:Version,
+  {4cc7227e-82a5-454c-b039-6a23b3de4786}, !- Handle
+  3.7.0;                                  !- Version Identifier
+
+OS:People:Definition,
+  {48632df4-7fb1-46cc-8459-3006bf4c3efa}, !- Handle
+  2019::LargeOffice::OpenOffice_People,   !- Name
+  People/Area,                            !- Number of People Calculation Method
+  ,                                       !- Number of People {people}
+  0.0565105540187077,                     !- People per Space Floor Area {person/m2}
+  ,                                       !- Space Floor Area per Person {m2/person}
+  0.3,                                    !- Fraction Radiant
+  Autocalculate,                          !- Sensible Heat Fraction
+  ,                                       !- Carbon Dioxide Generation Rate {m3/s-W}
+  ,                                       !- Enable ASHRAE 55 Comfort Warnings
+  ZoneAveraged;                           !- Mean Radiant Temperature Calculation Type
+
+OS:People:Definition,
+  {48632df4-7fb1-46cc-8459-3006bf4c3efb}, !- Handle
+  OpenOffice_People_SurfaceWeighted,      !- Name
+  People/Area,                            !- Number of People Calculation Method
+  ,                                       !- Number of People {people}
+  0.0565105540187077,                     !- People per Space Floor Area {person/m2}
+  ,                                       !- Space Floor Area per Person {m2/person}
+  0.3,                                    !- Fraction Radiant
+  Autocalculate,                          !- Sensible Heat Fraction
+  ,                                       !- Carbon Dioxide Generation Rate {m3/s-W}
+  ,                                       !- Enable ASHRAE 55 Comfort Warnings
+  SurfaceWeighted;                        !- Mean Radiant Temperature Calculation Type
+
+OS:People:Definition,
+  {48632df4-7fb1-46cc-8459-3006bf4c3efc}, !- Handle
+  OpenOffice_People_Short,                !- Name
+  People/Area,                            !- Number of People Calculation Method
+  ,                                       !- Number of People {people}
+  0.0565105540187077,                     !- People per Space Floor Area {person/m2}
+  ,                                       !- Space Floor Area per Person {m2/person}
+  0.3,                                    !- Fraction Radiant
+  Autocalculate;                          !- Sensible Heat Fraction

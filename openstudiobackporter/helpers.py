@@ -55,6 +55,9 @@ def copy_with_deleted_fields(
 ) -> None:
     """Copy an IdfObject while skipping certain field indices.
 
+    Used to backport cases where new fields have been added in the middle of the
+    IdfObject when going from the older to newer version.
+
     Args:
     -----
     * obj: (openstudio.IdfObject) (float): The source IdfObject, from the newer version
@@ -71,8 +74,36 @@ def copy_with_deleted_fields(
             newObject.setString(i - offset, value.get())
 
 
+def copy_with_added_fields(
+    obj: openstudio.IdfObject, newObject: openstudio.IdfObject, inserted_indices: set[int]
+) -> None:
+    """Copy an IdfObject while inserting certain field indices.
+
+    Used to backport cases where fields were removed when going from the older
+    to newer version.
+
+    Args:
+    -----
+    * obj: (openstudio.IdfObject) (float): The source IdfObject, from the newer version
+    * newObject: (openstudio.IdfObject) The target IdfObject, from the older version
+    * inserted_indices: (set[int]) The set of field indices to be inserted when
+        going from the newer to older version (0-indexed)
+    """
+
+    offset = 0
+    for i in range(newObject.numFields()):
+        if i in inserted_indices:
+            offset += 1
+            continue
+        if value := obj.getString(i - offset):
+            newObject.setString(i, value.get())
+
+
 def copy_with_cutoff_fields(obj: openstudio.IdfObject, newObject: openstudio.IdfObject, cutoff_index: int) -> None:
     """Copy an IdfObject while skipping fields from a certain index onward.
+
+    Used to backport cases where new fields have been added to the end of the
+    IdfObject when going from the older to newer version.
 
     Args:
     -----

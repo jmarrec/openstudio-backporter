@@ -1,0 +1,51 @@
+
+OS:Version,
+  {da40192b-d45e-44ba-bd82-99d3be1ab492}, !- Handle
+  3.8.0;                                  !- Version Identifier
+
+OS:ScheduleTypeLimits,
+  {cc20cea3-447b-4c24-aba6-c3f22b949fe3}, !- Handle
+  Fractional,                             !- Name
+  0,                                      !- Lower Limit Value
+  1,                                      !- Upper Limit Value
+  Continuous,                             !- Numeric Type
+  ;                                       !- Unit Type
+
+OS:Schedule:Day,
+  {3f6bfa0a-4cbe-41cd-ab48-7fc3096f3a75}, !- Handle
+  OfficeLarge BLDG_OCC_SCH_Default,       !- Name
+  {cc20cea3-447b-4c24-aba6-c3f22b949fe3}, !- Schedule Type Limits Name
+  Linear,                                 !- Interpolate to Timestep
+  6,                                      !- Hour 1
+  0,                                      !- Minute 1
+  0,                                      !- Value Until Time 1
+  18,                                     !- Hour 2
+  0,                                      !- Minute 2
+  0.05,                                   !- Value Until Time 2
+  24,                                     !- Hour 3
+  0,                                      !- Minute 3
+  0;                                      !- Value Until Time 3
+
+OS:Schedule:Day,
+  {7748e43e-1407-43e8-90a6-4098b0ac675f}, !- Handle
+  OfficeLarge BLDG_OCC_SCH_SmrDsn,        !- Name
+  {cc20cea3-447b-4c24-aba6-c3f22b949fe3}, !- Schedule Type Limits Name
+  No,                                       !- Interpolate to Timestep
+  6,                                      !- Hour 1
+  0,                                      !- Minute 1
+  0,                                      !- Value Until Time 1
+  22,                                     !- Hour 2
+  0,                                      !- Minute 2
+  1,                                      !- Value Until Time 2
+  24,                                     !- Hour 3
+  0,                                      !- Minute 3
+  0.05;                                   !- Value Until Time 3
+
+OS:Schedule:Day,
+  {09ca7433-798d-4409-ae8a-e1fc63049a31}, !- Handle
+  OfficeLarge BLDG_OCC_SCH_WntrDsn,       !- Name
+  {cc20cea3-447b-4c24-aba6-c3f22b949fe3}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  24,                                     !- Hour 1
+  0,                                      !- Minute 1
+  0;                                      !- Value Until Time 1

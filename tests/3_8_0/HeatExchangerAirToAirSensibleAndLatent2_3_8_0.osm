@@ -1,0 +1,62 @@
+
+OS:Version,
+  {da40192b-d45e-44ba-bd82-99d3be1ab492}, !- Handle
+  3.8.0;                                  !- Version Identifier
+
+OS:Schedule:Constant,
+  {b857d07e-549f-44a2-acf8-9a2e8294c985}, !- Handle
+  Always On Discrete,                     !- Name
+  {c7847156-4614-4e0e-a492-e7536b4da5e7}, !- Schedule Type Limits Name
+  1;                                      !- Value
+
+OS:ScheduleTypeLimits,
+  {c7847156-4614-4e0e-a492-e7536b4da5e7}, !- Handle
+  OnOff,                                  !- Name
+  0,                                      !- Lower Limit Value
+  1,                                      !- Upper Limit Value
+  Discrete,                               !- Numeric Type
+  Availability;                           !- Unit Type
+
+OS:HeatExchanger:AirToAir:SensibleAndLatent,
+  {bff9fd49-f9de-4853-8488-2193017b737c}, !- Handle
+  DOAS HVAC_053afb54_Heat Recovery Unit,  !- Name
+  {b857d07e-549f-44a2-acf8-9a2e8294c985}, !- Availability Schedule
+  autosize,                               !- Nominal Supply Air Flow Rate {m3/s}
+  0.76,                                   !- Sensible Effectiveness at 100% Heating Air Flow {dimensionless}
+  0.68,                                   !- Latent Effectiveness at 100% Heating Air Flow {dimensionless}
+  0.76,                                   !- Sensible Effectiveness at 100% Cooling Air Flow {dimensionless}
+  0.68,                                   !- Latent Effectiveness at 100% Cooling Air Flow {dimensionless}
+  ,                                       !- Supply Air Inlet Node
+  ,                                       !- Supply Air Outlet Node
+  ,                                       !- Exhaust Air Inlet Node
+  ,                                       !- Exhaust Air Outlet Node
+  0,                                      !- Nominal Electric Power {W}
+  Yes,                                    !- Supply Air Outlet Temperature Control
+  Plate,                                  !- Heat Exchanger Type
+  None,                                   !- Frost Control Type
+  1.7,                                    !- Threshold Temperature {C}
+  ,                                       !- Initial Defrost Time Fraction {dimensionless}
+  ,                                       !- Rate of Defrost Time Fraction Increase {1/K}
+  No,                                     !- Economizer Lockout
+  {738c67f1-2157-4d0e-a41c-586b64abf8c9}, !- Sensible Effectiveness of Heating Air Flow Curve Name
+  {8a54148f-33ea-42cd-b341-67056a545a23}, !- Latent Effectiveness of Heating Air Flow Curve Name
+  {738c67f1-2157-4d0e-a41c-586b64abf8c9}, !- Sensible Effectiveness of Cooling Air Flow Curve Name
+  {8a54148f-33ea-42cd-b341-67056a545a23}; !- Latent Effectiveness of Cooling Air Flow Curve Name
+
+OS:Curve:Quadratic,
+  {738c67f1-2157-4d0e-a41c-586b64abf8c9}, !- Handle
+  Simple DOAS_Heat Recovery Unit Sensible Performance, !- Name
+  1.06,                                   !- Coefficient1 Constant
+  0.191,                                  !- Coefficient2 x
+  -0.255,                                 !- Coefficient3 x**2
+  0,                                      !- Minimum Value of x
+  1;                                      !- Maximum Value of x
+
+OS:Curve:Quadratic,
+  {8a54148f-33ea-42cd-b341-67056a545a23}, !- Handle
+  Simple DOAS_Heat Recovery Unit Latent Performance, !- Name
+  1.06,                                   !- Coefficient1 Constant
+  0.191,                                  !- Coefficient2 x
+  -0.255,                                 !- Coefficient3 x**2
+  0,                                      !- Minimum Value of x
+  1;                                      !- Maximum Value of x
